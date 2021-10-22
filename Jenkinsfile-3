@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages{
+    stage('Docker build and Tag') {
+        steps {
+            sh 'docker build -t myDockerImage:latest .'
+            sh 'docker tag myDockerImage username/myDockerImage:latest'
+            sh 'docker tag myDockerImage username/myDockerImage:$BUILD_NUMBER'
+        }
+    }
+    stage('Publish to Docker Hub'){
+        steps {
+            withDockerRegistry([credentialsId: "dockerHub", url: ""]){
+            sh 'docker push myDockerImage username/myDockerImage:latest'
+            sh 'docker push myDockerImage username/myDockerImage:$BUILD_NUMBER'
+            }
+        }
+        }
+    }
+}
+
