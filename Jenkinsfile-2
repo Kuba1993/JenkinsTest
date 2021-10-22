@@ -1,0 +1,12 @@
+pipeline{
+    agent{dockerfile true}
+    stage('container-from-dockerfile') {
+        steps {
+            sh '''
+            node --version
+            git --version
+            curl -- version
+            '''
+        }
+    }
+}

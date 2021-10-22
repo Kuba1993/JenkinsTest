@@ -1,3 +1,3 @@
-FROM python:3.7-alpine
+FROM node:16-alpine
 
-CMD ["python", "-c", "print('Hello World')"]
+RUN apk add -U git curl
